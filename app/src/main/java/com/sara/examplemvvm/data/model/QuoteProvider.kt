@@ -1,11 +1,13 @@
 package com.sara.examplemvvm.data.model
 
+import javax.inject.Inject
+import javax.inject.Singleton
 
 
-class QuoteProvider {
-    companion object {
+@Singleton
+class QuoteProvider @Inject constructor(){
 
         var quotes:List<QuoteModel> = emptyList()
 
-    }
+
 }

@@ -3,14 +3,17 @@ package com.sara.examplemvvm.data
 import com.sara.examplemvvm.data.model.QuoteModel
 import com.sara.examplemvvm.data.model.QuoteProvider
 import com.sara.examplemvvm.data.network.QuoteService
+import javax.inject.Inject
 
-class QuoteRepository {
+class QuoteRepository @Inject constructor(
+    private val api: QuoteService,
+    private  val quoteProvider: QuoteProvider
+) {
 
-    private val api = QuoteService()
 
     suspend fun getAllQuotes():List<QuoteModel>{
         val response: List<QuoteModel> = api.getQuotes()
-        QuoteProvider.quotes = response
+        quoteProvider.quotes = response
         return response
     }
 
