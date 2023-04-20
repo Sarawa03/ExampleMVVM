@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val quoteViewModel: QuoteViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -22,16 +23,15 @@ class MainActivity : AppCompatActivity() {
 
         quoteViewModel.onCreate()
 
-        quoteViewModel.quoteModel.observe(this, Observer {currentQuote ->
-            binding.tvQuote.text = currentQuote.quote
-            binding.tvQuote.text = currentQuote.author
+        quoteViewModel.quoteModel.observe(this, Observer {
+            binding.tvQuote.text = it.quote
+            binding.tvAuthor.text = it.author
+        })
+        quoteViewModel.isLoading.observe(this, Observer {
+            binding.loading.isVisible = it
         })
 
-        quoteViewModel.isLoading.observe(this, Observer{
-            binding.progress.isVisible=it
-        })
-
-        binding.viewContainer.setOnClickListener{quoteViewModel.randomQuote()}
+        binding.viewContainer.setOnClickListener { quoteViewModel.randomQuote() }
 
     }
 }

@@ -9,13 +9,14 @@ import com.sara.examplemvvm.domain.GetQuotesUseCase
 import com.sara.examplemvvm.domain.GetRandomQuoteUseCase
 import kotlinx.coroutines.launch
 
-class QuoteViewModel: ViewModel() {
+class QuoteViewModel : ViewModel() {
 
     val quoteModel = MutableLiveData<QuoteModel>()
     val isLoading = MutableLiveData<Boolean>()
 
     var getQuotesUseCase = GetQuotesUseCase()
     var getRandomQuoteUseCase = GetRandomQuoteUseCase()
+
     fun onCreate() {
         viewModelScope.launch {
             isLoading.postValue(true)
@@ -27,17 +28,13 @@ class QuoteViewModel: ViewModel() {
             }
         }
     }
-    fun randomQuote(){
 
+    fun randomQuote() {
         isLoading.postValue(true)
         val quote = getRandomQuoteUseCase()
         if(quote!=null){
             quoteModel.postValue(quote)
         }
         isLoading.postValue(false)
-        //val currentQuote: QuoteModel = QuoteProvider.random()
-        //quoteModel.postValue(currentQuote)
     }
-
-
 }
