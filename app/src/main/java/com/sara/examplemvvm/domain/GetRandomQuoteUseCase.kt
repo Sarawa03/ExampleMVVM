@@ -1,15 +1,16 @@
 package com.sara.examplemvvm.domain
 
 
+import com.sara.examplemvvm.data.QuoteRepository
 import com.sara.examplemvvm.data.model.QuoteModel
-import com.sara.examplemvvm.data.model.QuoteProvider
+import com.sara.examplemvvm.domain.model.Quote
 import javax.inject.Inject
 
-class GetRandomQuoteUseCase @Inject constructor(private val quoteProvider: QuoteProvider){
+class GetRandomQuoteUseCase @Inject constructor(private val repository: QuoteRepository){
 
-    operator fun invoke(): QuoteModel?{
+    suspend operator fun invoke(): Quote?{
         //No es lo correcto
-        val quotes = quoteProvider.quotes
+        val quotes = repository.getAllQuotesFromDatabase()
         if(!quotes.isNullOrEmpty()){
             //val randomNumber = (0..quotes.size-1).random()
             val randomNumber = (quotes.indices).random()
